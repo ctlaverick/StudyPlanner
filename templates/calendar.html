@@ -29,19 +29,20 @@
             <tr>
                 {% for day in week %}
                     {% if day == day_date %}
-                    <th class="table-active ">{{ day }}</th>
+                    <td class="table-active ">{{ day }}</td>
                     {% else %}
-                    <th>{{ day }}</th>
+                    <td>
+                        {{ day }}
+                        <div class="container-sm">
+                            <p>Event</p>
+                        </div>
+                    </td>
                     {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <div class="row">
-        <a href="{{ url_for('calendar_page', username=username ) }}?user_month=-1&current_month={{ current_month }}" class="btn btn-primary">Previous Month</a>
-        <a href="" class="btn btn-primary">Next Month</a>
-    </div>
 </div>
 
 

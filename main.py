@@ -10,12 +10,13 @@ accounts = [
     {
         "Username": "username",
         "Password": "password",
-        "Email": "username@email.com"
+        "Email": "username@email.com",
     },
     {
         "Username": "ctlaverick",
         "Password": "123",
-        "Email": "ctlaverick@email.com"
+        "Email": "ctlaverick@email.com",
+        "Events": [ ["11/03/2024", "Assignment Due"], ["20/03/2024", "Chemistry Test"]],
     },
 ]
 
@@ -89,6 +90,16 @@ def logout():
 
 @app.route("/calendar/<string:username>")
 def calendar_page(*args, **kwargs):
+
+    if 'username' in session:
+        user=session['username']
+    else:
+        return redirect(url_for('login'))
+    
+    for account in accounts:
+        if account['username'] == user:
+            user_account = account
+
     print(f"args: {args}")
     print(f"kwargs: {kwargs}")
     cal = calendar.Calendar(firstweekday=0)
@@ -109,7 +120,7 @@ def calendar_page(*args, **kwargs):
             month_days.append(week_days)
             week_days = []
 
-    return render_template("calendar.html", month=month_days, day_date=day_date, current_month=month, username=session['username'])
+    return render_template("calendar.html", month=month_days, day_date=day_date, current_month=month, username=session['username'], user=user)
 
 
 if __name__=="__main__":
