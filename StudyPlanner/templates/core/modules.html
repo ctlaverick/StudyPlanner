@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="modal fade" id="addModuleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add a Module</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Enter your new modules name:</p>
+            <form id="addModuleForm" action="{{ url_for('core.modulesPage') }}" method="post">
+                <div>
+                    <input class="mb-2" type="text" name="moduleName" placeholder="Module Name" required>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <input class="btn btn-success" type="submit" value="Add Module" form="addModuleForm">
+        </div>
+      </div>
+    </div>
+</div> 
+
+<table class="vw-100 table fixed-table-body mt-2">
+    <thead>
+        <tr>
+            <th style="width: 75%;">Modules</th>
+            <th>Options</th>
+            <th>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModuleModal">
+                    Add a Module
+                  </button>                  
+            </th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for module in modules %}
+        <tr>
+            <td>{{ module.name}}</td>
+            <td colspan="2">
+                <button class="btn btn-outline-primary">
+                    Tasks
+                </button>
+                <a class="btn btn-outline-success" href="{{ url_for('core.editModule', id=module.id) }}">
+                    Edit
+                </a>
+                <a class="btn btn-outline-danger" href="{{ url_for('core.deleteModule', id=module.id) }}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+
+<!-- <div class="row">
+    <form class="mb-2" action="{{ url_for('core.modulesPage') }}" method="post">
+        <div>
+            <input class="mb-2" type="text" name="name" placeholder="Module Name">
+        </div>
+        <div>
+            <input class="btn btn-primary mb-2" type="submit" value="Add Module">
+        </div>
+    </form>
+</div> -->
+
+<!-- <div class="container text-center mt-5 vw-100">
+    <div class="row mb-5">
+        <h1 class="display-2">Manage your Modules here</h1>
+    </div>
+    <div class="row">
+        <table class="vw-100 table table-bordered fixed-table-body">
+            <tr>
+                <th>Modules</th>
+                <th>View Tasks</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tbody class="table-group-divider"></tbody>
+        </table>
+    </div>
+</div> -->
+
+<!-- <td>
+    <button class="btn btn-outline-primary">
+        Tasks
+    </button>
+    <button class="btn btn-outline-success">
+        Edit
+    </button>
+    <button class="btn btn-outline-danger">
+        Delete
+    </button>
+</td> -->

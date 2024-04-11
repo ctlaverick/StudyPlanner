@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<table class="vw-100 table fixed-table-body mt-2">
+    <thead>
+        <tr>
+            <th style="width: 75%;">Modules</th>
+            <th colspan="2" class="text-center">Options</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for module in modules %}
+            <tr>
+                <th colspan="2">{{ module.name}}</th>
+                <th class="text-end">
+                    <a href="{{ url_for('core.addTask', module_id=module.id ) }}" type="button" class="btn btn-sm btn-success me-2">
+                        Add a Task
+                    </a> 
+                </th>
+            </tr>
+            {% for task in module.tasks %}
+            <tr>
+                <td class="ps-5"><strong>Task:</strong> {{ task.name }} <br> <strong>Description:</strong> {{ task.description }} <br> <strong>Due:</strong> {{ task.due_date }} </td>
+                <td colspan="2">
+                    <button class="btn btn-outline-primary">
+                        View
+                    </button>
+                    <a class="btn btn-outline-success" href="{{ url_for('core.editTask', id=task.id, author=task.user) }}">
+                        Edit
+                    </a>
+                    <a class="btn btn-outline-danger" href="{{ url_for('core.deleteTask', id=task.id, author=task.user) }}">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

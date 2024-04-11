@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form action="{{ url_for('core.editModule', id=module.id) }}" method="post">
+    <div>
+        <input class="mb-2" type="text" name="moduleName" value="{{ module.module_name }}" required>
+    </div>
+    <div>
+        <a class="btn btn-danger" href="{{ url_for('core.modulesPage', id=module.id) }}">Cancel</a>
+        <input type="submit" value="Save" class="btn btn-success">
+    </div>
+</form>
+
+{% endblock %}

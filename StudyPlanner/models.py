@@ -1,41 +1,59 @@
-import datetime as datetime
 from . import db
+import datetime as datetime
+from flask_login import UserMixin
 
-class User(db.Model): #Usermixin
-    user_id = db.Column(db.Integer, primary_key=True)
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), nullable=False, unique=True)
     username = db.Column(db.String(20), nullable=False, unique=True) #nullable means cannot be empty
     password = db.Column(db.String(80), nullable=False)
     creation_date = db.Column(db.DateTime, default= datetime.datetime.now(datetime.UTC))
+    modules = db.relationship('Module', backref='module_owner') # Creates a relationship between User and Module
+    tasks = db.relationship('Task', backref='task_owner', primaryjoin="User.id==Task.user") # Creates a relationship between User and Task
+    events = db.relationship('Event', backref='event_owner', primaryjoin="User.id==Event.user") # Creates a relationship between User and Task
 
-class Modules(db.Model):
-    module_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+class Module(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.Integer, db.ForeignKey('user.id'))
     creation_date = db.Column(db.DateTime, default= datetime.datetime.now(datetime.UTC))
-    module_name = db.Column(db.String(100), nullable=False)
-    # Creates the relationship between the Users table and this one using the name module_owner to use it e.g. module_owner.module_id
-    modules = db.relationship('User', backref='module_owner')
+    name = db.Column(db.String(100), nullable=False)
+
+    tasks = db.relationship('Task', backref='module_tasks', primaryjoin="Module.id==Task.module", cascade="all, delete")
+    events = db.relationship('Event', backref='module_events', primaryjoin="Module.id==Event.module", cascade="all, delete")
     
-class Tasks(db.Model):
-    task_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
-    module_id = db.Column(db.Integer, db.ForeignKey('modules.module_id'))
-    event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    module = db.Column(db.Integer, db.ForeignKey('module.id', ondelete="CASCADE"))
+    event = db.Column(db.Integer, db.ForeignKey('event.id'))
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(256), nullable=False)
     creation_date = db.Column(db.DateTime, default= datetime.datetime.now(datetime.UTC))
     due_date = db.Column(db.DateTime, nullable=False)
 
-    user_task = db.relationship('User', backref='user_task')
-    module_task = db.relationship('Modules', backref='module_task')
-    event_task = db.relationship('Events', backref='event_task')
+    # user_task = db.relationship('User', backref='user_task')
+    # module_task = db.relationship('Modules', backref='module_task')
+    # event_task = db.relationship('Events', backref='event_task')
 
-class Events(db.Model):
-    event_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
-    module_id = db.Column(db.Integer, db.ForeignKey('modules.module_id'))
-    task_id = db.Column(db.Integer, db.ForeignKey('tasks.task_id'))
+    events = db.relationship('Event', backref='events', primaryjoin="Task.id==Event.task", cascade="all, delete")
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    module = db.Column(db.Integer, db.ForeignKey('module.id', ondelete="CASCADE"))
+    task = db.Column(db.Integer, db.ForeignKey('task.id', ondelete="CASCADE"))
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(256), nullable=False)
     creation_date = db.Column(db.DateTime, default= datetime.datetime.now(datetime.UTC))
     due_date = db.Column(db.DateTime, nullable=False)
 
-    user_event = db.relationship('User', backref='user_event')
-    module_event = db.relationship('Modules', backref='module_event')
-    task_event = db.relationship('Tasks', backref='task_event')
+    # user_event = db.relationship('User', backref='user_event')
+    # module_event = db.relationship('Modules', backref='module_event')
+    # task_event = db.relationship('Tasks', backref='task_event')
+
+    tasks = db.relationship('Task', backref='task', primaryjoin="Event.id==Task.event")
+
+
+# For relationships the first parameter is the child class name and the backref is the new column that will be created for the relationship

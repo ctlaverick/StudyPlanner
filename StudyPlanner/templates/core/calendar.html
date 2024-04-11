@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+
+<h1>{{user}}</h1>
 <div class="container-fluid vw-100">
     <div class="row">
         <div class="col-8">
@@ -15,15 +17,17 @@
 </div>
 <div class="text-center table-responsive">
     <table class="vw-100 table table-bordered fixed-table-body">
-        <tr>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
-            <th>Sun</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+        </thead>
         <tbody class="table-group-divider">
             {% for week in month %}
             <tr>

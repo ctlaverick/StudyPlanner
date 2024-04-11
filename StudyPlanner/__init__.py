@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
-db = SQLAlchemy()
+db = SQLAlchemy() # Has to be here to create the db instance before it is tried to be imported from .models
 
 from .models import *
 
@@ -13,12 +14,21 @@ def create_app():
 
     db.init_app(app)
 
-
     with app.app_context():
+        # db.drop_all()
         db.create_all()
 
     from . import auth, core
     app.register_blueprint(auth.bp)
     app.register_blueprint(core.bp)
+
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        # since the user_id is just the primary key of our user table, use it in the query for the user to get the user object
+        return User.query.get(int(user_id))
 
     return app

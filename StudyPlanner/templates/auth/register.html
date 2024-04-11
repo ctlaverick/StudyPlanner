@@ -16,7 +16,7 @@
         <h1 class="display-1">Welcome to Study Planner!</h1>
     </div>
     <div class="row">
-        <form class="mb-2" action="{{ url_for('register') }}" method="post">
+        <form class="mb-2" action="{{ url_for('auth.register') }}" method="post">
             <div>
                 <input class="mb-2" type="email" name="email" placeholder="Email">
             </div>
@@ -30,7 +30,7 @@
                 <input class="mb-2" type="password" name="password2" placeholder="Retype Password">
             </div>
             <div class="row mb-2">
-                <a href="{{ url_for('login') }}">Already got an account?</a>
+                <a href="{{ url_for('auth.login') }}">Already got an account?</a>
             </div>
             <div>
                 <input class="btn btn-primary mb-2" type="submit" value="Create Account">
