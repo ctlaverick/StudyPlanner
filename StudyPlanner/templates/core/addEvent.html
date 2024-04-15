@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form action="{{ url_for('core.addEvent') }}" method="post">
+    <div>
+        <p>Module:</p>
+        <select class="form-select" name="module" aria-label="Select module">
+            {% for module in current_user.modules %}
+                <option value="{{ module.id }}">{{ module.name }}</option>
+            {% endfor %}
+          </select>
+    </div>
+    <div>
+        <p>Task:</p>
+        <select class="form-select" name="module" aria-label="Select task">
+            <option selected value="none">Select a task or Leave Blank</option>
+            {% for task in current_user.tasks %}
+                <option value="{{ task.id }}">{{ task.name }}</option>
+            {% endfor %}
+          </select>
+    </div>
+    <div>
+        <p>Event Name:</p>
+        <input type="text" name="name">
+    </div>
+    <div>
+        <p>Event Description:</p>
+        <input type="text" name="description">
+    </div>
+    <div>
+        <p>Date:</p>
+        <input type="date" name="date" value="{{due_date}}" required>
+    </div>
+    <div>
+        <p>Time:</p>
+        <input type="time" name="time" value="{{ due_time }}" required>
+    </div>
+    <div>
+        <input type="submit" value="Add Event">
+    </div>
+</form>
+
+{% endblock %}

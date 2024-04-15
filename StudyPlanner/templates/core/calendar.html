@@ -48,6 +48,24 @@
         </tbody>
     </table>
 </div>
+<div>
+    <table class="vw-100 table table-bordered fixed-table-body">
+        <thead>
+            <tr>
+                <th>Today's Events</th>
+                <th>Time</th>
+                <th><a href="{{ url_for('core.addEvent')}}" class="btn btn-success">Add Event</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in todaysEvents %}
+            <tr>
+                <td>event.name</td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+</div>
 
 
 {% endblock %}

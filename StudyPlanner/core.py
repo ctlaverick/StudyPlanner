@@ -90,7 +90,7 @@ def addTask(module_id):
         dateAndTime = [int(x) for x in dateAndTime] # changes the list to int not str
         due_date = datetime.datetime(*dateAndTime)
         new_task = Task(name=name, description=description, due_date=due_date, user=current_user.id, module=module.id)
-        
+        # create event for task to be added to the calendar on task creation
         db.session.add(new_task)
         db.session.commit()
         
@@ -138,7 +138,7 @@ def editTask(author, id):
     
     return redirect(url_for('core.tasksPage'))
 
-@bp.route("/calendar")
+@bp.route("/events/calendar")
 def calendarPage():
 
     userid = current_user.get_id()
@@ -148,8 +148,7 @@ def calendarPage():
     cal = calendar.Calendar(firstweekday=0) # Creates a calendar with the first week day being monday
     today = date.today() # Gets today date
     year = today.year # Gets todays year
-    custom_month = 0
-    month = today.month + custom_month
+    month = today.month #gets todays month
     day_date = today.day # Gets todays day
 
     month_days = []
@@ -163,8 +162,40 @@ def calendarPage():
             month_days.append(week_days)
             week_days = []
 
-    return render_template("core/calendar.html", month=month_days, day_date=day_date, current_month=month, user=userid)
+    print(month_days)
+    date1 = date(year, month, 1)
+    date2 = date(year, (month+1), 1)
+    events = Event.query.filter_by(user=userid).filter(Event.due_date.between(date1, date2)).all()
+    userEvents = current_user.events
+    print(userEvents)
+    todaysEvents = Event.query.filter_by(user=userid).filter_by(due_date = today).all()
+    print(todaysEvents)
+    return render_template("core/calendar.html", month=month_days, day_date=day_date, current_month=month, user=userid, todaysEvents=todaysEvents)
 
+@bp.route("/Events/add", methods=['GET', 'POST'])
+def addEvent():
+    if request.method=='POST':
+        module = request.form.get('module')
+        task = request.form.get('task')
+        name = request.form.get('name')
+        description = request.form.get('description')
+        date = request.form.get('date').split('-')
+        time = request.form.get('time').split(':')
 
+        dateAndTime = date + time
+        dateAndTime = [int(x) for x in dateAndTime] # changes the list to int not str
+        due_date = datetime.datetime(*dateAndTime)
+
+        if task == "none":
+            event = Event(user=current_user.get_id(), module=module, name=name, description=description, due_date=due_date)
+        else:
+            event = Event(user=current_user.get_id(), module=module, task=task, name=name, description=description, due_date=due_date)
+        
+        db.session.add(event)
+        db.session.commit()
+
+        return redirect(url_for('core.calendarPage'))
+    
+    return render_template("core/addEvent.html")
 # if __name__=="__main__":
 #     app.run(debug=True)
