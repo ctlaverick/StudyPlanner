@@ -32,16 +32,12 @@
             {% for week in month %}
             <tr>
                 {% for day in week %}
-                    {% if day == day_date %}
-                    <td class="table-active ">{{ day }}</td>
-                    {% else %}
-                    <td>
-                        {{ day }}
-                        <div class="container-sm">
-                            <p>Event</p>
-                        </div>
+                    <td class="{% if day == day_date %} table-active {% endif %}">
+                        <p>{{ day }}</p>
+                        {% for event in userEvents %}
+                            
+                        {% endfor %}
                     </td>
-                    {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}

@@ -168,6 +168,21 @@ def calendarPage():
     events = Event.query.filter_by(user=userid).filter(Event.due_date.between(date1, date2)).all()
     userEvents = current_user.events
     print(userEvents)
+    print(userEvents[1].due_date.day)
+
+
+    #New Format
+    # Generate list for the calendar [calendar]
+    # List contains a sub list for week [ [week1], [week2], ...]
+    # Which contains a sublist for day
+    # which will include day, month, events
+    # Then in the template loop through the calendar list for each week
+    # Loop for each day
+    # for each day print the day number
+    # If it is the last month or current month change to a greyish colour
+    # if the day is current day, highlight it
+    #for event in day list, list the event names
+
     todaysEvents = Event.query.filter_by(user=userid).filter_by(due_date = today).all()
     print(todaysEvents)
     return render_template("core/calendar.html", month=month_days, day_date=day_date, current_month=month, user=userid, todaysEvents=todaysEvents)
@@ -197,5 +212,3 @@ def addEvent():
         return redirect(url_for('core.calendarPage'))
     
     return render_template("core/addEvent.html")
-# if __name__=="__main__":
-#     app.run(debug=True)
