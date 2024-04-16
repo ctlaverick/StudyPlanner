@@ -4,11 +4,10 @@ from flask_login import LoginManager
 
 db = SQLAlchemy() # Has to be here to create the db instance before it is tried to be imported from .models
 
-from .models import *
+from StudyPlanner.models import *
 
 def create_app():
     app = Flask(__name__)
-
     app.config['SECRET_KEY'] = 'd71da3aa16a41e7005859041a8063229c1e84514118c8a41b0a03438225499e6'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
@@ -18,7 +17,7 @@ def create_app():
         # db.drop_all()
         db.create_all()
 
-    from . import auth, core
+    from StudyPlanner import auth, core
     app.register_blueprint(auth.bp)
     app.register_blueprint(core.bp)
 

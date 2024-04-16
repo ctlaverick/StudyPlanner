@@ -6,7 +6,9 @@ Student Name: Charles Laverick
 This project is a flask web application for a study planner that allows the user to create modules and tasks for those modules to track progress as well as the ability to view them on a calendar.
 
 ## Running the App
-There is no run.py or main.py file to run the flask application instead this project is a python package as it uses an __init__.py file as well as several other files that are imported. To run this web app you first have to set a couple environment variables using the following commands:
+The run.py file should work but just incase there is also a command line way to run the Flask app.
+
+If the run.py file does not work then to run the flask application instead you first have to set a couple environment variables using the following commands:
 
 (Command Prompt)
 
