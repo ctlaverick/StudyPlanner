@@ -5,7 +5,7 @@
 <div class="container-fluid vw-100">
     <div class="row">
         <div class="col-8">
-            <p class="text-start">(Month)</p>
+            <h3 class="text-start">{{ month_name }}</h3>
         </div>
         <div class="col-2">
             <p><</p>
@@ -32,10 +32,10 @@
             {% for week in month %}
             <tr>
                 {% for day in week %}
-                    <td class="{% if day == day_date %} table-active {% endif %}">
-                        <p>{{ day }}</p>
-                        {% for event in userEvents %}
-                            
+                    <td class="{% if day[0] == day_date %} table-active {% endif %} {% if day[1] != current_month %} table-dark {% endif %}">
+                        <p>{{ day[0] }}</p>
+                        {% for event in day[2] %}
+                            <p class="border border-success border-top border-bottom bg-success text-light">{{ event.name }}</p>
                         {% endfor %}
                     </td>
                 {% endfor %}

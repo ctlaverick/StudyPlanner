@@ -1,30 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-
-<form action="{{ url_for('core.addTask', module_id=module_id)}}" method="post">
-    <div>
-        <p>Module:</p>
-        <input type="text" name="module" value="{{ module.name }}" disabled>
-    </div>
-    <div>
-        <p>Task Name:</p>
-        <input type="text" name="taskName" required>
-    </div>
-    <div>
-        <p>Task Description:</p>
-        <input type="text" name="taskDescription" maxlength="256" required>
-    </div>
-    <div>
-        <p>Task Due Date:</p>
-        <input type="date" name="taskDueDate" required>
-    </div>
-    <div>
-        <p>Task Due Date:</p>
-        <input type="time" name="taskDueTime" required>
-    </div>
-    <div>
-        <a href="{{ url_for('core.tasksPage') }}" class="btn btn-danger">Cancel</a>
-        <input type="submit" value="Save" class="btn btn-success">
-    </div>
-</form>
+<div class="container-md mt-5">
+    <h1 class="display-3 text-decoration-underline text-center">Add a Task to {{ module.name }}</h1>
+    <form class="border p-2" action="{{ url_for('core.addTask', module_id=module_id)}}" method="post">
+        <div class="mb-2">
+            <label for="module">Module:</label>
+            <input id="module"  type="text" name="module" value="{{ module.name }}" disabled>
+        </div>
+        <div class="mb-2">
+            <label for="name">Task Name:</label>
+            <input id="name"  type="text" name="taskName" required>
+        </div>
+        <div class="mb-2">
+            <label for="description">Description:</label>
+            <textarea rows="3" id="description"  type="text" name="taskDescription" maxlength="256" required></textarea>
+        </div>
+        <div class="mb-2">
+            <label for="date">Due Date:</label>
+            <input id="date"  type="date" name="taskDueDate" required>
+        </div>
+        <div class="mb-2">
+            <label for="time">Due Time:</label>
+            <input id="time"  type="time" name="taskDueTime" required>
+        </div class="mb-2">
+        <div>
+            <a href="{{ url_for('core.tasksPage') }}" class="btn btn-danger">Cancel</a>
+            <input type="submit" value="Save" class="btn btn-success">
+        </div>
+    </form>
+</div>
 {% endblock %}

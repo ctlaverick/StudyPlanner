@@ -149,20 +149,13 @@ def calendarPage():
     today = date.today() # Gets today date
     year = today.year # Gets todays year
     month = today.month #gets todays month
+    month_name = calendar.month_name[month]
     day_date = today.day # Gets todays day
 
     month_days = []
     week_days = []
     num = 0
 
-    for day in cal.itermonthdates(year, month): #Generates list of weeks which are lists of days
-        num += 1
-        week_days.append(day.day)
-        if num % 7 == 0:
-            month_days.append(week_days)
-            week_days = []
-
-    print(month_days)
     date1 = date(year, month, 1)
     date2 = date(year, (month+1), 1)
     events = Event.query.filter_by(user=userid).filter(Event.due_date.between(date1, date2)).all()
@@ -182,10 +175,20 @@ def calendarPage():
     # If it is the last month or current month change to a greyish colour
     # if the day is current day, highlight it
     #for event in day list, list the event names
-
+    
+    for day in cal.itermonthdates(year, month): #Generates list of weeks which are lists of days
+        print(day)
+        num += 1
+        events = Event.query.filter_by(user=userid).filter(Event.due_date.between(datetime.datetime(day.year, day.month, day.day, 0, 0, 0, 0), datetime.datetime(day.year, day.month, day.day, 23, 59, 59, 999999))).all()
+        dayList = [day.day, day.month, events]
+        week_days.append(dayList)
+        if num % 7 == 0:
+            month_days.append(week_days)
+            week_days = []
+    print(month_days)
     todaysEvents = Event.query.filter_by(user=userid).filter_by(due_date = today).all()
     print(todaysEvents)
-    return render_template("core/calendar.html", month=month_days, day_date=day_date, current_month=month, user=userid, todaysEvents=todaysEvents)
+    return render_template("core/calendar.html", month=month_days, day_date=day_date, current_month=month, month_name=month_name, todaysEvents=todaysEvents)
 
 @bp.route("/Events/add", methods=['GET', 'POST'])
 def addEvent():

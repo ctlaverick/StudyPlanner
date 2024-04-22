@@ -1,37 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="{{ url_for('core.editTask', author=task.user, id=task.id)}}" method="post">
-    <div>
-        <p>Module:</p>
-        <select class="form-select" name="selectedModule" aria-label="Default select example">
-            {% for module in current_user.modules %}
-                {% if module.id==task.module %}
-                <option selected value="{{ module.id }}">{{ module.name }}</option>
-                {% else %}
-                <option value="{{ module.id }}">{{ module.name }}</option>
-                {% endif %}
-            {% endfor %}
-          </select>
-    </div>
-    <div>
-        <p>Task Name:</p>
-        <input type="text" name="taskName" value="{{ task.name }}" required>
-    </div>
-    <div>
-        <p>Task Description:</p>
-        <textarea type="text" name="taskDescription" maxlength="256" required>{{ task.description }}</textarea>
-    </div>
-    <div>
-        <p>Task Due Date:</p>
-        <input type="date" name="taskDueDate" value="{{due_date}}" required>
-    </div>
-    <div>
-        <p>Task Due time:</p>
-        <input type="time" name="taskDueTime" value="{{ due_time }}" required>
-    </div>
-    <div>
-        <a href="{{ url_for('core.tasksPage') }}" class="btn btn-danger">Cancel</a>
-        <input type="submit" value="Save" class="btn btn-success">
-    </div>
-</form>
+<div class="container-md mt-5">
+    <h1 class="display-3 text-decoration-underline text-center">Edit a Task</h1>
+    <form class="border p-2" action="{{ url_for('core.editTask', author=task.user, id=task.id)}}" method="post">
+        <div class="mb-2">
+            <label for="module">Module:</label>
+            <select class="form-select" name="selectedModule" aria-label="Default select example">
+                {% for module in current_user.modules %}
+                    {% if module.id==task.module %}
+                    <option selected value="{{ module.id }}">{{ module.name }}</option>
+                    {% else %}
+                    <option value="{{ module.id }}">{{ module.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-2"> 
+            <label for="name">Task Name:</label>
+            <input id="name" type="text" name="taskName" value="{{ task.name }}" required>
+        </div>
+        <div class="mb-2">
+            <label for="description">Description:</label>
+            <textarea id="description" type="text" name="taskDescription" maxlength="256" required>{{ task.description }}</textarea>
+        </div>
+        <div class="mb-2">
+            <label for="date">Due Date:</label>
+            <input id="date" type="date" name="taskDueDate" value="{{due_date}}" required>
+        </div>
+        <div class="mb-2">
+            <label for="time">Due Time:</label>
+            <input id="time" type="time" name="taskDueTime" value="{{ due_time }}" required>
+        </div>
+        <div class="mb-2">
+            <a href="{{ url_for('core.tasksPage') }}" class="btn btn-danger">Cancel</a>
+            <input type="submit" value="Save" class="btn btn-success">
+        </div>
+    </form>
+</div>
 {% endblock %}
