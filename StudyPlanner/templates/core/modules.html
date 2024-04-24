@@ -29,10 +29,17 @@
         <tr>
             <th style="width: 75%;">Modules</th>
             <th>Options</th>
-            <th>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModuleModal">
-                    Add a Module
-                  </button>                  
+            <th class="text-end">
+                <div class="d-none d-md-block">
+                    <button type="button" class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#addModuleModal">
+                        Add a Module
+                      </button>
+                </div>
+                <div class="d-md-none">
+                    <button type="button" class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#addModuleModal">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                </div>
             </th>
         </tr>
     </thead>
@@ -41,15 +48,28 @@
         <tr>
             <td>{{ module.name}}</td>
             <td colspan="2">
-                <a class="btn btn-outline-primary" href="{{ url_for('core.tasksPage')}}">
-                    Tasks
-                </a>
-                <a class="btn btn-outline-success" href="{{ url_for('core.editModule', id=module.id) }}">
-                    Edit
-                </a>
-                <a class="btn btn-outline-danger" href="{{ url_for('core.deleteModule', id=module.id) }}">
-                    Delete
-                </a>
+                <div class="d-lg-none d-flex align-items-center justify-content-center">
+                    <a class="btn btn-outline-primary" href="{{ url_for('core.tasksPage')}}">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    <a class="btn btn-outline-success" href="{{ url_for('core.editModule', id=module.id) }}">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a class="btn btn-outline-danger" href="{{ url_for('core.deleteModule', id=module.id) }}">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+                <div class="d-none d-lg-flex align-items-center justify-content-center">
+                    <a class="btn btn-outline-primary" href="{{ url_for('core.tasksPage')}}">
+                        Tasks
+                    </a>
+                    <a class="btn btn-outline-success" href="{{ url_for('core.editModule', id=module.id) }}">
+                        Edit
+                    </a>
+                    <a class="btn btn-outline-danger" href="{{ url_for('core.deleteModule', id=module.id) }}">
+                        Delete
+                    </a>
+                </div>
             </td>
         </tr>
         {% endfor %}

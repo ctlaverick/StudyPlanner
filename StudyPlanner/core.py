@@ -160,8 +160,8 @@ def calendarPage():
     date2 = date(year, (month+1), 1)
     events = Event.query.filter_by(user=userid).filter(Event.due_date.between(date1, date2)).all()
     userEvents = current_user.events
-    print(userEvents)
-    print(userEvents[1].due_date.day)
+    # print(userEvents)
+    # print(userEvents[1].due_date.day)
 
 
     #New Format
@@ -177,7 +177,7 @@ def calendarPage():
     #for event in day list, list the event names
     
     for day in cal.itermonthdates(year, month): #Generates list of weeks which are lists of days
-        print(day)
+        # print(day)
         num += 1
         events = Event.query.filter_by(user=userid).filter(Event.due_date.between(datetime.datetime(day.year, day.month, day.day, 0, 0, 0, 0), datetime.datetime(day.year, day.month, day.day, 23, 59, 59, 999999))).all()
         dayList = [day.day, day.month, events]
@@ -185,9 +185,10 @@ def calendarPage():
         if num % 7 == 0:
             month_days.append(week_days)
             week_days = []
-    print(month_days)
+            
+    # print(month_days)
     todaysEvents = Event.query.filter_by(user=userid).filter_by(due_date = today).all()
-    print(todaysEvents)
+    # print(todaysEvents)
     return render_template("core/calendar.html", month=month_days, day_date=day_date, current_month=month, month_name=month_name, todaysEvents=todaysEvents)
 
 @bp.route("/Events/add", methods=['GET', 'POST'])

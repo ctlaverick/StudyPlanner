@@ -22,15 +22,29 @@
             <tr>
                 <td class="ps-5"><strong>Task:</strong> {{ task.name }} <br> <strong>Description:</strong> {{ task.description }} <br> <strong>Due:</strong> {{ task.due_date }} </td>
                 <td colspan="2">
-                    <button class="btn btn-outline-primary">
-                        View
-                    </button>
-                    <a class="btn btn-outline-success" href="{{ url_for('core.editTask', id=task.id, author=task.user) }}">
-                        Edit
-                    </a>
-                    <a class="btn btn-outline-danger" href="{{ url_for('core.deleteTask', id=task.id, author=task.user) }}">
-                        Delete
-                    </a>
+                    <div class="d-lg-none d-flex align-items-center justify-content-center">
+                        <a href="#" class="btn btn-outline-primary mx-1">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a class="btn btn-outline-success mx-1" href="{{ url_for('core.editTask', id=task.id, author=task.user) }}">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a class="btn btn-outline-danger mx-1" href="{{ url_for('core.deleteTask', id=task.id, author=task.user) }}">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                    <div class="d-none d-lg-flex align-items-center justify-content-center">
+                        <a href="#" class="btn btn-outline-primary mx-1">
+                            View
+                        </a>
+                        <a class="btn btn-outline-success mx-1" href="{{ url_for('core.editTask', id=task.id, author=task.user) }}">
+                            Edit
+                        </a>
+                        <a class="btn btn-outline-danger mx-1" href="{{ url_for('core.deleteTask', id=task.id, author=task.user) }}">
+                            Delete
+                        </a>
+                    </div>
+
                 </td>
             </tr>
             {% endfor %}
