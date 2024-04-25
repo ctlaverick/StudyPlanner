@@ -1,43 +1,75 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form action="{{ url_for('core.addEvent') }}" method="post">
-    <div>
-        <label class="form-label">Module:</label>
-        <select class="form-select" name="module" aria-label="Select module">
-            {% for module in current_user.modules %}
-                <option value="{{ module.id }}">{{ module.name }}</option>
-            {% endfor %}
-          </select>
+<style>
+    input{
+            text-align: center;
+        }
+</style>
+
+<div class="container-sm text-center mt-5">
+    <div class="container-sm m-auto">
+        <div class="border border-2 rounded-2 border-dark">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-center display-2 mt-5">Add an Event</h1>
+                    <p class="text-center">Enter the details for your new event</p>
+                    <form action="{{ url_for('core.addEvent') }}" method="post">
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Module:</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" name="module" aria-label="Select module">
+                                    {% for module in current_user.modules %}
+                                        <option value="{{ module.id }}">{{ module.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Task:</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" name="module" aria-label="Select task">
+                                    <option selected value="none">No Task</option>
+                                    {% for task in current_user.tasks %}
+                                        <option value="{{ task.id }}">{{ task.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Event Name:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="name">
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Event Description:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="description">
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Event Date:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="date" name="date" value="{{due_date}}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Event Time:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="time" name="time" value="{{ due_time }}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <div>
+                                <input type="submit" value="Add Event" class="btn btn-success ms-5">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label class="form-label">Task:</label>
-        <select class="form-select" name="module" aria-label="Select task">
-            <option selected value="none">Select a task or Leave Blank</option>
-            {% for task in current_user.tasks %}
-                <option value="{{ task.id }}">{{ task.name }}</option>
-            {% endfor %}
-          </select>
-    </div>
-    <div>
-        <label class="form-label">Event Name:</label>
-        <input type="text" name="name">
-    </div>
-    <div>
-        <label class="form-label">Event Description:</label>
-        <input type="text" name="description">
-    </div>
-    <div>
-        <label class="form-label">Event Date:</label>
-        <input type="date" name="date" value="{{due_date}}" required>
-    </div>
-    <div>
-        <label class="form-label">Event Time:</label>
-        <input type="time" name="time" value="{{ due_time }}" required>
-    </div>
-    <div>
-        <input type="submit" value="Add Event" class="btn btn-success ms-5">
-    </div>
-</form>
+</div>
 
 {% endblock %}
