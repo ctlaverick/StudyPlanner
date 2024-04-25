@@ -6,19 +6,13 @@ from datetime import date
 from . import db
 from .models import *
 
-# from flask_sqlalchemy import SQLAlchemy # used for dealing with a sql database
-
-# app = Flask(__name__)
-# app.secret_key = "d71da3aa16a41e7005859041a8063229c1e84514118c8a41b0a03438225499e6" #used for sessions
-
-bp = Blueprint('core', __name__) #url_prefix='/'
+bp = Blueprint('core', __name__) #url_prefix='/' can be used to set a specifc url route for the pages in this blueprint
 
 @bp.route("/")
 def index():
     user=None
     if 'username' in session:
         user=session['username']
-    # flash('Hello, test!')
     return render_template("core/index.html", user=user)
 
 @bp.route("/modules", methods=['GET', 'POST'])
@@ -48,22 +42,25 @@ def modulesPage():
 
 @bp.route("/modules/delete/<int:id>", methods=['GET'])
 def deleteModule(id):
-
     module = Module.query.filter_by(id=id).first()
-    print(module)
-    db.session.delete(module)
-    db.session.commit()
+    if current_user == module.user:
+        print(module)
+        db.session.delete(module)
+        db.session.commit()
     return redirect(url_for('core.modulesPage'))
 
 @bp.route("/modules/edit/<int:id>", methods=['GET','POST'])
 def editModule(id):
     module = Module.query.filter_by(id=id).first()
-
+    print(current_user.id)
+    print(module.user)
+    if current_user.id != module.user:
+        return redirect(url_for('core.modulesPage'))
+    
     if request.method == 'POST':
-        module.module_name = request.form.get('moduleName')
+        module.name = request.form.get('moduleName')
         db.session.commit()
         return redirect(url_for('core.modulesPage'))
-
 
     return render_template("core/editModule.html", module=module)
 
@@ -77,8 +74,6 @@ def tasksPage():
 
 @bp.route("/tasks/add/<int:module_id>", methods=['GET','POST'])
 def addTask(module_id):
-    user = current_user
-
     module = Module.query.filter_by(id=module_id).first()
 
     if request.method == 'POST':
@@ -93,10 +88,19 @@ def addTask(module_id):
         # create event for task to be added to the calendar on task creation
         db.session.add(new_task)
         db.session.commit()
-        
+
+        # If add event marked
+        # create an event using the modules colour code
+        # https://getbootstrap.com/docs/5.3/forms/form-control/
+
+        if request.form.get('addToCalendarCheck'): # If link to calendar checked on form
+            event = Event(user=current_user.get_id(), module=module.id, task=new_task.id, name=name, description=description, due_date=due_date)
+            db.session.add(event)
+            db.session.commit()
+
         return redirect(url_for('core.tasksPage'))
     
-    return render_template("core/addTask.html", user=user, module_id=module_id, module=module)
+    return render_template("core/addTask.html", module_id=module_id, module=module)
 
 @bp.route("/tasks/delete/<string:author>/<int:id>", methods=['GET'])
 def deleteTask(author, id):
@@ -187,7 +191,7 @@ def calendarPage():
             week_days = []
             
     # print(month_days)
-    todaysEvents = Event.query.filter_by(user=userid).filter_by(due_date = today).all()
+    todaysEvents = Event.query.filter_by(user=userid).filter(Event.due_date.between(datetime.datetime(today.year, today.month, today.day, 0, 0, 0, 0), datetime.datetime(day.year, day.month, day.day, 23, 59, 59, 999999))).all()
     # print(todaysEvents)
     return render_template("core/calendar.html", month=month_days, day_date=day_date, current_month=month, month_name=month_name, todaysEvents=todaysEvents)
 
@@ -216,3 +220,8 @@ def addEvent():
         return redirect(url_for('core.calendarPage'))
     
     return render_template("core/addEvent.html")
+
+@bp.app_template_filter('date_filter')
+def date_filter(date):
+    date = str(date)
+    return date[10:]

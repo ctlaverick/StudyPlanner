@@ -14,7 +14,7 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        # db.drop_all()
+        # db.drop_all() can be used to remove all tables in the databse
         db.create_all()
 
     from StudyPlanner import auth, core

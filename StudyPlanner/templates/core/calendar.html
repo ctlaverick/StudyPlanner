@@ -49,14 +49,15 @@
         <thead>
             <tr>
                 <th>Today's Events</th>
-                <th>Time</th>
-                <th><a href="{{ url_for('core.addEvent')}}" class="btn btn-success">Add Event</a></th>
+                <th class="text-center">Due at</th>
+                <th class="text-end"><a href="{{ url_for('core.addEvent')}}" class="btn btn-success me-1">Add Event</a></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
             {% for event in todaysEvents %}
             <tr>
-                <td>event.name</td>
+                <td>{{ event.name }}</td>
+                <td class="text-center">{{ event.due_date | date_filter }}</td>
             </tr>
             {% endfor%}
         </tbody>

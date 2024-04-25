@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .form-switch {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.form-switch label {
+ margin-right: 50px !important;
+}
+</style>
 
 <div class="container-sm text-center mt-5">
     <div class="container-sm m-auto">
@@ -39,6 +49,14 @@
                                 <input class="form-control" id="time"  type="time" name="taskDueTime" required>
                             </div>
                         </div class="row mb-3 d-flex align-items-center justify-content-center">
+
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-4 col-form-label" for="addToCalendar">Link Event to Calendar</label>
+                            <div class="col-sm-6 form-check form-switch">
+                                <input class="form-check-input mx-auto" type="checkbox" role="switch" id="addToCalendar" name="addToCalendarCheck" checked>
+                            </div>
+                        </div>
+
                         <div class="mb-2">
                             <a href="{{ url_for('core.tasksPage') }}" class="btn btn-danger">Cancel</a>
                             <input type="submit" value="Save" class="btn btn-success">
@@ -53,3 +71,10 @@
     </div>
 </div>
 {% endblock %}
+
+<!-- <div class="row mb-3 d-flex align-items-center justify-content-center">
+    <div class="form-check form-switch">
+        <input class="form-check-input me-auto" type="checkbox" role="switch" id="addToCalendar" checked>
+        <label class="form-check-label ms-auto" for="addToCalendar">Default switch checkbox input</label>
+    </div>
+</div> -->
