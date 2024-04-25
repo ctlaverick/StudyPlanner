@@ -13,9 +13,16 @@
             <tr>
                 <th colspan="2">{{ module.name}}</th>
                 <th class="text-end">
-                    <a href="{{ url_for('core.addTask', module_id=module.id ) }}" type="button" class="btn btn-sm btn-success me-2">
-                        Add a Task
-                    </a> 
+                    <div class="d-none d-md-block">
+                        <a href="{{ url_for('core.addTask', module_id=module.id ) }}" type="button" class="btn btn-sm btn-success me-2">
+                            Add a Task
+                        </a>
+                    </div>
+                    <div class="d-md-none">
+                        <a href="{{ url_for('core.addTask', module_id=module.id ) }}" type="button" class="btn btn-sm btn-success me-2">
+                            <i class="bi bi-plus-lg"></i>
+                        </a>
+                    </div>
                 </th>
             </tr>
             {% for task in module.tasks %}

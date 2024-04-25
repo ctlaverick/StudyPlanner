@@ -1,8 +1,70 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container-md mt-5">
-    <h1 class="display-3 text-decoration-underline text-center">Edit a Task</h1>
-    <form class="border p-2" action="{{ url_for('core.editTask', author=task.user, id=task.id)}}" method="post">
+
+<div class="container-sm text-center mt-5">
+    <div class="container-sm m-auto">
+        <div class="border border-2 rounded-2 border-dark">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-center display-2 mt-5">Edit a Task</h1>
+                    <p class="text-center">Edit the details for your task below</p>
+                    <form action="{{ url_for('core.editTask', author=task.user, id=task.id)}}" method="post" method="post">
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-4 col-form-label" for="module">Module:</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" name="selectedModule" aria-label="Default select example">
+                                    {% for module in current_user.modules %}
+                                        {% if module.id==task.module %}
+                                        <option selected value="{{ module.id }}">{{ module.name }}</option>
+                                        {% else %}
+                                        <option value="{{ module.id }}">{{ module.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-4 col-form-label" for="name">Task Name:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="name"  type="text" name="taskName" value="{{ task.name }}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-4 col-form-label" for="description">Description:</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" rows="3" id="description"  type="text" name="taskDescription" maxlength="256" required>{{ task.description }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-4 col-form-label" for="date">Due Date:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="date"  type="date" name="taskDueDate" value="{{ due_date }}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-4 col-form-label" for="time">Due Time:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="time"  type="time" name="taskDueTime" value="{{ due_time}}" required>
+                            </div>
+                        </div class="row mb-3 d-flex align-items-center justify-content-center">
+                        <div>
+                            <a href="{{ url_for('core.tasksPage') }}" class="btn btn-danger">Cancel</a>
+                            <input type="submit" value="Save" class="btn btn-success">
+                        </div>
+                    </form>
+                </div>
+                <div class="col d-none d-lg-flex">
+                    <img class="p-4 img-fluid bg-success border-start border-2 border-dark" src="{{ url_for('static', filename='completed_tasks.svg') }}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+<!-- <form class="border p-2" action="{{ url_for('core.editTask', author=task.user, id=task.id)}}" method="post">
         <div class="mb-2">
             <label for="module">Module:</label>
             <select class="form-select" name="selectedModule" aria-label="Default select example">
@@ -35,6 +97,4 @@
             <a href="{{ url_for('core.tasksPage') }}" class="btn btn-danger">Cancel</a>
             <input type="submit" value="Save" class="btn btn-success">
         </div>
-    </form>
-</div>
-{% endblock %}
+    </form> -->

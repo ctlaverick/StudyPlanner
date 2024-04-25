@@ -9,10 +9,13 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <p>Enter your new modules name:</p>
+            <p>This module will contain tasks and events</p>
             <form id="addModuleForm" action="{{ url_for('core.modulesPage') }}" method="post">
-                <div>
-                    <input class="mb-2" type="text" name="moduleName" placeholder="Module Name" required>
+                <div class="row mb-3 d-flex align-items-center justify-content-center">
+                    <label class="col-sm-4 col-form-label">Module Name:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" name="moduleName" placeholder="Module Name" required>
+                    </div>
                 </div>
             </form>
         </div>
@@ -33,11 +36,11 @@
                 <div class="d-none d-md-block">
                     <button type="button" class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#addModuleModal">
                         Add a Module
-                      </button>
+                    </button>
                 </div>
                 <div class="d-md-none">
                     <button type="button" class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#addModuleModal">
-                        <i class="bi bi-plus"></i>
+                        <i class="bi bi-plus-lg"></i>
                       </button>
                 </div>
             </th>

@@ -1,7 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form action="{{ url_for('core.editModule', id=module.id) }}" method="post">
+<div class="container-sm m-auto">
+    <div class="border border-2 rounded-2 border-dark">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center display-2 mt-5">Edit a Module</h1>
+                <p class="text-center">Edit the details for your module below</p>
+
+                <form action="{{ url_for('core.editModule', id=module.id) }}" method="post">
+                    <div class="row mb-3 d-flex align-items-center justify-content-center">
+                        <label class="col-sm-4 col-form-label" for="module">Module Name:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="moduleName" value="{{ module.name }}" required>
+                            </div>
+                    </div>
+                    <div class="text-center">
+                        <a class="btn btn-danger" href="{{ url_for('core.modulesPage', id=module.id) }}">Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+            <div class="col d-none d-lg-flex">
+                <img class="p-4 img-fluid bg-success border-start border-2 border-dark" src="{{ url_for('static', filename='completed_tasks.svg') }}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+div class="container-sm text-center mt-5">
+    
+<!-- <form action="{{ url_for('core.editModule', id=module.id) }}" method="post">
     <div>
         <input class="mb-2" type="text" name="moduleName" value="{{ module.module_name }}" required>
     </div>
@@ -10,5 +39,4 @@
         <input type="submit" value="Save" class="btn btn-success">
     </div>
 </form>
-
-{% endblock %}
+ -->

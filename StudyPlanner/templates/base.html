@@ -15,8 +15,8 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ms-auto me-5">
+          <div class="collapse navbar-collapse mt-2" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto me-2">
               {% if current_user.is_authenticated %}
               <a class="nav-link" aria-current="page" href="/">Home</a>
               <a class="nav-link" href="{{ url_for('core.tasksPage')}}">Tasks</a>
@@ -26,8 +26,12 @@
                 <a class="btn btn-danger" href="{{ url_for('auth.logout')}}">Logout</a>
               </div>
               {% else %}
-              <a class="btn btn-primary mx-1" href="{{ url_for('auth.login')}}">Login</a>
-              <a class="btn btn-success mx-1" href="{{ url_for('auth.register')}}">Sign Up</a>
+              <div class="mb-2">
+                <a class="btn btn-primary mx-1" href="{{ url_for('auth.login')}}">Login</a>
+              </div>
+              <div class="mb-2">
+                <a class="btn btn-success mx-1" href="{{ url_for('auth.register')}}">Sign Up</a>
+              </div>
               {% endif %}
             </div>
           </div>
