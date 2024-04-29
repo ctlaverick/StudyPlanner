@@ -17,6 +17,12 @@
                         <input class="form-control" type="text" name="moduleName" placeholder="Module Name" required>
                     </div>
                 </div>
+                <div class="row mb-3 d-flex align-items-center justify-content-center">
+                    <label class="col-sm-4 col-form-label">Module Colour:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control form-control-color" type="color" name="moduleColour" required>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="modal-footer">
@@ -52,24 +58,24 @@
             <td>{{ module.name}}</td>
             <td colspan="2">
                 <div class="d-lg-none d-flex align-items-center justify-content-center">
-                    <a class="btn btn-outline-primary" href="{{ url_for('core.tasksPage')}}">
+                    <a class="btn btn-outline-primary mx-1" href="{{ url_for('core.tasksPage')}}">
                         <i class="bi bi-eye"></i>
                     </a>
-                    <a class="btn btn-outline-success" href="{{ url_for('core.editModule', id=module.id) }}">
+                    <a class="btn btn-outline-success mx-1" href="{{ url_for('core.editModule', id=module.id) }}">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a class="btn btn-outline-danger" href="{{ url_for('core.deleteModule', id=module.id) }}">
+                    <a class="btn btn-outline-danger mx-1" href="{{ url_for('core.deleteModule', id=module.id) }}">
                         <i class="bi bi-trash"></i>
                     </a>
                 </div>
                 <div class="d-none d-lg-flex align-items-center justify-content-center">
-                    <a class="btn btn-outline-primary" href="{{ url_for('core.tasksPage')}}">
+                    <a class="btn btn-outline-primary mx-1" href="{{ url_for('core.tasksPage')}}">
                         Tasks
                     </a>
-                    <a class="btn btn-outline-success" href="{{ url_for('core.editModule', id=module.id) }}">
+                    <a class="btn btn-outline-success mx-1" href="{{ url_for('core.editModule', id=module.id) }}">
                         Edit
                     </a>
-                    <a class="btn btn-outline-danger" href="{{ url_for('core.deleteModule', id=module.id) }}">
+                    <a class="btn btn-outline-danger mx-1" href="{{ url_for('core.deleteModule', id=module.id) }}">
                         Delete
                     </a>
                 </div>

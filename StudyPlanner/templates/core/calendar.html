@@ -1,41 +1,77 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    #eventLink {
+        text-decoration: none;
+    }
+</style>
 
-<h1>{{current_user.username}}'s Calendar</h1>
 <div class="container-fluid vw-100">
     <div class="row">
         <div class="col-8">
+            <h1>{{current_user.username}}'s Calendar</h1>
+        </div>
+        <div class="col-4 text-center">
+            <div class="row mt-1">
+                <div class="col-3">
+                    <p>Last Year</p>
+                </div>
+                <div class="col-6 mt-auto">
+                    <p>Month</p>
+                </div>
+                <div class="col-3">
+                    <p>Next Year</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-8 ">
             <h3 class="text-start">{{ month_name }}</h3>
         </div>
-        <div class="col-2">
-            <p><</p>
-        </div>
-        <div class="col-2">
-            <p>></p>
+        <div class="col-4">
+            
+            <div class="row">
+                <div class="col-3">
+                    <p><<</p>
+                </div>
+                <div class="col-3">
+                    <p><</p>
+                </div>
+                <div class="col-3">
+                    <p>></p>
+                </div>
+                <div class="col-3">
+                    <p>>></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <div class="text-center table-responsive">
-    <table class="vw-100 table table-bordered fixed-table-body">
+    <table class="vw-100 table table-bordered">
         <thead>
-            <tr>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
+            <tr class="d-flex">
+                <th class="col-sm">Mon</th>
+                <th class="col-sm">Tue</th>
+                <th class="col-sm">Wed</th>
+                <th class="col-sm">Thu</th>
+                <th class="col-sm">Fri</th>
+                <th class="col-sm">Sat</th>
+                <th class="col-sm">Sun</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
             {% for week in month %}
-            <tr>
+            <tr class="d-flex">
                 {% for day in week %}
-                    <td class="{% if day[0] == day_date %} table-active {% endif %} {% if day[1] != current_month %} table-dark {% endif %}">
+                    <td class="col-sm {% if day[0] == day_date %} table-active {% endif %} {% if day[1] != current_month %} table-dark {% endif %}">
                         <p>{{ day[0] }}</p>
                         {% for event in day[2] %}
-                            <p class="border border-success border-top border-bottom bg-success text-light">{{ event.name }}</p>
+                            <div class="mb-1" style="background-color: {{ event[1] }};">
+                                <a href="{{ url_for('core.editEvent', event_id=event[0].id, author=event[0].user) }}" class="{% if event[2] > 0.5 %} text-dark {% else %} text-light {% endif %} mb-1" id="eventLink">{{ event[0].name }}</a>
+
+                            </div>
                         {% endfor %}
                     </td>
                 {% endfor %}

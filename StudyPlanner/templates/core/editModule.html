@@ -15,6 +15,12 @@
                                 <input class="form-control" type="text" name="moduleName" value="{{ module.name }}" required>
                             </div>
                     </div>
+                    <div class="row mb-3 d-flex align-items-center justify-content-center">
+                        <label class="col-sm-4 col-form-label">Module Colour:</label>
+                        <div class="col-sm-6">
+                            <input class="form-control form-control-color" type="color" name="moduleColour" value="#ff0000" required>
+                        </div>
+                    </div>
                     <div class="text-center">
                         <a class="btn btn-danger" href="{{ url_for('core.modulesPage', id=module.id) }}">Cancel</a>
                         <input type="submit" value="Save" class="btn btn-success">
@@ -28,15 +34,3 @@
     </div>
 </div>
 {% endblock %}
-div class="container-sm text-center mt-5">
-    
-<!-- <form action="{{ url_for('core.editModule', id=module.id) }}" method="post">
-    <div>
-        <input class="mb-2" type="text" name="moduleName" value="{{ module.module_name }}" required>
-    </div>
-    <div>
-        <a class="btn btn-danger" href="{{ url_for('core.modulesPage', id=module.id) }}">Cancel</a>
-        <input type="submit" value="Save" class="btn btn-success">
-    </div>
-</form>
- -->

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    input{
+            text-align: center;
+        }
+
+</style>
+
+<div class="container-sm text-center mt-5">
+    <div class="container-sm m-auto">
+        <div class="border border-2 rounded-2 border-dark">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-center display-2 mt-5">Edit an Event</h1>
+                    <p class="text-center">Change the details for your event</p>
+                    <form action="{{ url_for('core.editEvent', author=event.user, event_id=event.id) }}" method="post">
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Module:</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" name="module" aria-label="Select module">
+                                    {% for module in current_user.modules %}
+                                        {% if module.id==event.module %}
+                                            <option selected value="{{ module.id }}">{{ module.name }}</option>
+                                        {% else %}
+                                            <option value="{{ module.id }}">{{ module.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Task:</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" name="module" aria-label="Select task">
+                                    <option selected value="none">No Task</option>
+                                    {% for task in current_user.tasks %}
+                                        {% if task.id==event.task %}
+                                            <option selected value="{{ task.id }}">{{ task.name }}</option>
+                                        {% else %}
+                                            <option value="{{ task.id }}">{{ task.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Event Name:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="name" value="{{ event.name }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Event Description:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="description" value="{{ event.description }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Event Date:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="date" name="date" value="{{ due_date }}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <label class="col-sm-2 col-form-label">Event Time:</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="time" name="time" value="{{ due_time }}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center justify-content-center">
+                            <div>
+                                <input type="submit" value="Save Changes" class="btn btn-success ms-5">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col d-none d-lg-flex">
+                    <img class="p-4 img-fluid bg-success border-start border-2 border-dark" src="{{ url_for('static', filename='events.svg') }}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

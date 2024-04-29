@@ -27,7 +27,7 @@
             </tr>
             {% for task in module.tasks %}
             <tr>
-                <td class="ps-5"><strong>Task:</strong> {{ task.name }} <br> <strong>Description:</strong> {{ task.description }} <br> <strong>Due:</strong> {{ task.due_date }} </td>
+                <td class="ps-5"><strong>Task:</strong> {{ task.name }} <br> <strong>Description:</strong> {{ task.description }} <br> <strong>Due:</strong> {{ task.due_date | time_filter }} at {{ task.due_date | date_filter }}</td>
                 <td colspan="2">
                     <div class="d-lg-none d-flex align-items-center justify-content-center">
                         <a href="#" class="btn btn-outline-primary mx-1">

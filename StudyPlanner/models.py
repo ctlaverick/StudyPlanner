@@ -19,7 +19,7 @@ class Module(db.Model):
     user = db.Column(db.Integer, db.ForeignKey('user.id'))
     creation_date = db.Column(db.DateTime, default= datetime.datetime.now(datetime.UTC))
     name = db.Column(db.String(100), nullable=False)
-
+    colour = db.Column(db.String(7), nullable=False)
     tasks = db.relationship('Task', backref='module_tasks', primaryjoin="Module.id==Task.module", cascade="all, delete")
     events = db.relationship('Event', backref='module_events', primaryjoin="Module.id==Event.module", cascade="all, delete")
     
