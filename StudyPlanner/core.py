@@ -56,7 +56,7 @@ def editModule(id):
         module.colour = request.form.get('moduleColour') 
         db.session.commit()
         return redirect(url_for('core.modulesPage'))
-
+    
     return render_template("core/editModule.html", module=module)
 
 
@@ -71,9 +71,6 @@ def tasksPage():
 @bp.route("/tasks/add/<int:module_id>", methods=['GET','POST'])
 @login_required
 def addTask(module_id):
-    # TODO:
-    # Add event id to Task table when creating task
-    
     module = Module.query.filter_by(id=module_id).first()
 
     if request.method == 'POST':
@@ -107,7 +104,6 @@ def addTask(module_id):
 def deleteTask(author, id):
     if author == current_user.get_id():
         task = Task.query.filter_by(id=id).first()
-        print(task)
 
         db.session.delete(task)
         db.session.commit()
@@ -117,36 +113,39 @@ def deleteTask(author, id):
 @bp.route("/tasks/edit/<string:author>/<int:id>", methods=['GET','POST'])
 @login_required
 def editTask(author, id):
-    if author == current_user.get_id():
+    if author != current_user.get_id():
+        return redirect(url_for('core.tasksPage'))
+    elif request.method == 'POST':
         task = Task.query.filter_by(id=id).first()
         module = Module.query.filter_by(id=task.id).first()
-        if request.method == 'POST':
-            selectedModule = request.form.get('selectedModule')
-            name = request.form.get('taskName')
-            description = request.form.get('taskDescription')
-            date = request.form.get('taskDueDate').split('-')
-            time = request.form.get('taskDueTime').split(':')
-            dateAndTime = date + time
-            dateAndTime = [int(x) for x in dateAndTime] # changes the list to int not str (comprehension)
-            due_date = datetime.datetime(*dateAndTime)
-            # print(selectedModule)
-            db.session.query(Task).filter_by(id=id).update(dict(name=name, description=description, due_date=due_date, user=current_user.id, module=selectedModule))
+        selectedModule = request.form.get('selectedModule')
+        name = request.form.get('taskName')
+        description = request.form.get('taskDescription')
+        date = request.form.get('taskDueDate').split('-')
+        time = request.form.get('taskDueTime').split(':')
+        dateAndTime = date + time
+        dateAndTime = [int(x) for x in dateAndTime] # changes the list to int not str (comprehension)
+        due_date = datetime.datetime(*dateAndTime)
+        # print(selectedModule)
+        db.session.query(Task).filter_by(id=id).update(dict(name=name, description=description, due_date=due_date, user=current_user.id, module=selectedModule))
+        db.session.commit()
+        # If the task has an event id stored then update the event as well
+        if task.event: # If it is not null
+            #update event and commit event to database
+            print("Works")
+            db.session.query(Event).filter_by(id=task.event).update(dict(name=name, description=description, due_date=due_date, module=selectedModule))
             db.session.commit()
-            # If the task has an event id stored then update the event as well
-            if task.event: # If it is not null
-                #update event and commit event to database
-                print("Works")
 
-            return redirect(url_for('core.tasksPage'))
-        
+        return redirect(url_for('core.tasksPage'))
+    else:
+        task = Task.query.filter_by(id=id).first()
+        module = Module.query.filter_by(id=task.id).first()
         date = str(task.due_date)
         date = date.split(" ")
         due_date = date[0]
         due_time = date[1]
         due_time = due_time[:-3]
         return render_template("core/editTask.html", task=task, module=module, due_date=due_date, due_time=due_time)
-    
-    return redirect(url_for('core.tasksPage'))
 
 @bp.route("/events/calendar/")
 @login_required
@@ -208,7 +207,7 @@ def editEvent(author, event_id):
     if author != current_user.id:
         return redirect(url_for('core.calendarPage'))
     # task = Task.query.filter_by(event=event.id).first()
-    if request.method == 'POST':
+    elif request.method == 'POST':
         module = request.form.get('module')
         task = request.form.get('task')
         name = request.form.get('name')

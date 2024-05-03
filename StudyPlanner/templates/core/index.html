@@ -1,17 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="display-1 text-center">Welcome to Study Planner</h1>
-<h3 class="display-5 text-center">The all in one web app to plan your studying sessions</h3>
-<div class="mx-5 mt-5">
-    <p>Features:</p>
-    <ul>
-        <li>Add events</li>
-        <li>Reminder</li>
-        <li>View your calendar</li>
-        <li>View your timetable</li>
-        <li>Get progress reports</li>
-    </ul>
+<div class="container-sm text-center mt-5">
+    <div class="container-sm m-auto">
+        <div class="border border-2 rounded-2 border-dark">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-center display-2 mt-5">Welcome to Study Planner!</h1>
+                    <h4 class="text-center mt-2">The all in one web app to plan your studying sessions</h4>
+                    <h5 class="mt-2 ms-5 text-start">Features:</h5>
+                    <ul class="text-start ms-5">
+                        <li>Create modules by giving them a name and a colour</li>
+                        <li>Create your tasks for each module</li>
+                        <li>Created tasks can automatically be added to your calendar</li>
+                    </ul>
+                    <div class="d-lg-none">
+                        <img class="p-4 img-fluid bg-success" src="{{ url_for('static', filename='date_picker.svg') }}" alt="">
+                    </div>
+                </div>
+                <div class="col d-none d-lg-flex">
+                    <img class="p-4 img-fluid bg-success border-start border-2 border-dark" src="{{ url_for('static', filename='date_picker.svg') }}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
