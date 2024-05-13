@@ -20,32 +20,6 @@ To run simply use the following command:
 
 flash run
 
-## Current Marking Stats
-
-if statments 
-- 10+ = 10 marks
-- actual amount = 1( __init__) + 6 (auth.py) + 10 (core.py) = 17
-
-Lists / Dictionaries
-- 2-10 = 10 Marks
-- actual amount = 7 (core.py)
-
-Variables
-- 10+ = 10 Marks
-- actual amount = 14 (auth.py) + 20+ (core.py)
-
-Loops
-- 2+ = 5 Marks
-- actual amount = 4 ( core.py)
-
-Functions
-- 2-3 = 5 Marks
-- actual amount = 10 (core.py) + 3 (auth.py) + 2 (__init__)
-
-Comments
-- 5+ = 5 Marks
-- actual amount = 3 (__init__.py) + 10 (auth.py) + ~32 (core.py)
-
 
 ## Useful Commands
 Use in command prompt:
