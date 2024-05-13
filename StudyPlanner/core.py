@@ -162,16 +162,16 @@ def calendarPage():
     month_days = generate_calendar(year, month, current_user.id)
     return render_template("core/calendar.html", month=month_days, day_date=day_date, current_month=month, month_name=month_name, todaysEvents=todaysEvents)
 
-@bp.route("/events/calendar/<int:year>/<int:month>")
-@login_required
-def customCalendarPage(year, month):
-    # If year given = 0 it means current year
-        # if month = 0 it means current month and therefore switch to this month's calendar
-        # elif month > 0 means forward to month N
-        # elif month > 0 means backwards to month N
-    # elif year given > 0 means forward to year N with month = current month
-    # elif year given < 0 means backward to year N with month = current month
-    return render_template("core/index.html", user=current_user.id)
+# @bp.route("/events/calendar/<int:year>/<int:month>")
+# @login_required
+# def customCalendarPage(year, month):
+#     # If year given = 0 it means current year
+#         # if month = 0 it means current month and therefore switch to this month's calendar
+#         # elif month > 0 means forward to month N
+#         # elif month > 0 means backwards to month N
+#     # elif year given > 0 means forward to year N with month = current month
+#     # elif year given < 0 means backward to year N with month = current month
+#     return render_template("core/index.html", user=current_user.id)
 
 @bp.route("/Events/add", methods=['GET', 'POST'])
 @login_required
