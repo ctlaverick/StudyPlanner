@@ -1,9 +1,5 @@
 # StudyPlanner
-Student ID: W22063136
-
-Student Name: Charles Laverick
-
-This project is a flask web application for a study planner that allows the user to create modules and tasks for those modules to track progress as well as the ability to view them on a calendar.
+This project is a flask web application for a study planner that allows the user to create modules and tasks for those modules to track progress as well as the ability to view them on a calendar. Originally created during my time at University
 
 ## Running the App
 The run.py file should work but just incase there is also a command line way to run the Flask app.
